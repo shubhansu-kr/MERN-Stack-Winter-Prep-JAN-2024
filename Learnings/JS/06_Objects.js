@@ -29,3 +29,11 @@ console.log(student.acads.platform[1]);
 console.log(student.acads.scores);
 console.log(student.acads.scores.amcat);
 console.log(student.acads.scores.cocubes);
+
+
+// We can use indexing to access the elements of the objects
+
+console.log(student["acads"]);
+console.log(student["acads"]["scores"].amcat);
+// or 
+console.log(student["acads"]["scores"]["amcat"]);

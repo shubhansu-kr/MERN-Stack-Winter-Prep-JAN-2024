@@ -6,7 +6,7 @@ const app = express();
 app.get('/', (req, res) => {
     // console.log(req);
     console.log(__dirname);
-    res.sendFile();
+    res.send();
 });
 
 app.listen(portNumber, ()=>{

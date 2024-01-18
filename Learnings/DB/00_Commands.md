@@ -41,3 +41,18 @@ Output:
 ```
 
 An id is created for each document under the key `_id`.
+
+Always use `""` or `''` for inserting data on key part if the key is multiword key. eg: {'roll no': 21}: here, roll no is a multi word key, thus we have to use single quote.
+
+<!-- Ordered vs Unordered Insertion -->
+When we insert multiple documents/rows and if there are any anomaly in any step, the following insertions will be aborted but the prev operations will be saved. This is called ordered insertion.
+`db.<collection_name>.insertMany([{}, {}, ...])` or
+`db.<collection_name>.insertMany([{}, {}, ...], {ordered:true})` 
+
+In case of unordered insertion, if there is an error in any step all the prev and the subsequent steps are also executed. Only the steps containing the error will be aborted.
+`db.<collection_name>.insertMany([{}, {}, ...], {ordered:false})` 
+
+<!-- Case Sensitivity in MongoDB -->
+- Collection names are case sensitive
+- Field name within document(ie. keys) are also case sensitive.
+

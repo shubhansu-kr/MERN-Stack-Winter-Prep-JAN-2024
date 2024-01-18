@@ -1,4 +1,11 @@
-const express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+// Use body-parser middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const portNumber = 5503;
 const users = ["John", "Doe"];
@@ -6,15 +13,13 @@ const users = ["John", "Doe"];
 let homePage = "Hello World <p> <a href=\"./users\">listuser</a> </p> <p> <a href=\"./addUser\">addUser</a> </p>";
 
 let userForm = `
-    <form action="" method="post">
+    <form action="/addUser" method="post">
     <label for="inputField">Enter something:</label>
-    <input type="text" id="inputField" name="inputField" required>
+    <input type="text" id="inputField" name="userName" required>
     <br>
     <input type="submit" value="Submit">
     </form>
-`
-
-const app = express();
+`;
 
 // route: "/"
 app.get('/', (req, res) => {
@@ -25,7 +30,7 @@ app.get('/', (req, res) => {
 app.get('/users', (req, res) => {
     let userList = "";
     userList = users.reduce((acc, curr) => (acc + curr + " \n"), userList);
-    res.send(userList);
+    res.send(userList); 
 });
 
 app.get('/addUser', (req, res) => {
@@ -33,10 +38,12 @@ app.get('/addUser', (req, res) => {
 });
 
 app.post('/addUser', (req, res) => {
-    let userData = req.body.firstName;
+    console.log(req.body);
+    let userData = req.body.userName;
     console.log(userData);
 
-    res.sendStatus(200);
+    users.push(userData);
+    res.send(userForm);
 });
 
 app.get("*", (req, res) => {
@@ -46,6 +53,10 @@ app.get("*", (req, res) => {
 app.listen(portNumber, () => {
     console.log(`Server is listening at port http://localhost:${portNumber}`);
 });
+
+// Whenever we want to run scripts in Deployment env, we can write 
+// scripts and add the reference as key value pair to the package.json file
+// in the script document.
 
 
 /* 
